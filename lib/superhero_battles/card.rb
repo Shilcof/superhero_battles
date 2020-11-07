@@ -1,5 +1,9 @@
 class Card
 
+    @@blu="\e[1;34m"
+    @@cyn="\e[1;36m"
+    @@white="\e[0m"
+
     def initialize(hero)
         hero.each do |key, value|
             self.class.attr_accessor(key)
@@ -17,56 +21,36 @@ class Card
         @@all
     end
 
-    # {
-    #     "id": 731,
-    #     "name": "Zoom",
-    #     "slug": "731-zoom",
-    #     "powerstats": {
-    #       "intelligence": 50,
-    #       "strength": 10,
-    #       "speed": 100,
-    #       "durability": 28,
-    #       "power": 100,
-    #       "combat": 28
-    #     },
-    #     "appearance": {
-    #       "gender": "Male",
-    #       "race": null,
-    #       "height": [
-    #         "6'1",
-    #         "185 cm"
-    #       ],
-    #       "weight": [
-    #         "181 lb",
-    #         "81 kg"
-    #       ],
-    #       "eyeColor": "Red",
-    #       "hairColor": "Brown"
-    #     },
-    #     "biography": {
-    #       "fullName": "Hunter Zolomon",
-    #       "alterEgos": "No alter egos found.",
-    #       "aliases": [
-    #         "-"
-    #       ],
-    #       "placeOfBirth": "-",
-    #       "firstAppearance": "Flash Secret Files #3",
-    #       "publisher": "DC Comics",
-    #       "alignment": "bad"
-    #     },
-    #     "work": {
-    #       "occupation": "-",
-    #       "base": "Keystone City, Kansas"
-    #     },
-    #     "connections": {
-    #       "groupAffiliation": "Secret Society of Super Villains, formerly Keystone Police Department, F.B.I.",
-    #       "relatives": "Ashley Zolomon (ex-wife)"
-    #     },
-    #     "images": {
-    #       "xs": "https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/xs/731-zoom.jpg",
-    #       "sm": "https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/sm/731-zoom.jpg",
-    #       "md": "https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/md/731-zoom.jpg",
-    #       "lg": "https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/lg/731-zoom.jpg"
-    #     }
-    #   }
+    def bio
+        "#{@@blu}\n#{self.name}\n
+#{@@cyn}Superhero Battles ratings:\n#{@@white}
+        Intelligence: #{self.powerstats["intelligence"]}
+        Strength: #{self.powerstats["strength"]}
+        Speed: #{self.powerstats["speed"]}
+        Durability: #{self.powerstats["durability"]}
+        Power: #{self.powerstats["power"]}
+        Combat: #{self.powerstats["combat"]}\n
+#{@@cyn}Appearance\n#{@@white}
+        Gender: #{self.appearance["gender"]}
+        Race: #{self.appearance["race"]}
+        Height: #{self.appearance["height"]}
+        Weight: #{self.appearance["weight"]}
+        Eye colour: #{self.appearance["eyeColor"]}
+        Hair colour: #{self.appearance["hairColor"]}\n
+#{@@cyn}Biography\n#{@@white}
+        Full name: #{self.biography["fullName"]}
+        Alter egos: #{self.biography["alterEgos"]}
+        Aliases: #{self.biography["aliases"]}
+        Birth place: #{self.biography["placeOfBirth"]}
+        First appearance: #{self.biography["firstAppearance"]}
+        Publisher: #{self.biography["publisher"]}
+        Alignment: #{self.biography["alignment"]}\n
+#{@@cyn}Work\n#{@@white}
+        Occupation: #{self.work["occupation"]} 
+        Base: #{self.work["base"]}\n
+#{@@cyn}Connections\n#{@@white} 
+        Affiliated groups: #{self.connections["groupAffiliation"]}
+        Relatives: #{self.connections["relatives"]}\n\n"
+    end
+
 end
