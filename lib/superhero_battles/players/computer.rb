@@ -1,8 +1,9 @@
 module Players 
     class Computer < Player
 
-        def choice(board)
-            (1..6).sample # random player
+        def choice
+            sleep(1)
+            rand(1..6) # random player
         end
 
     end

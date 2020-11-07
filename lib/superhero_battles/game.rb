@@ -1,5 +1,7 @@
 class Game
 
+    LOOK_UP = ["intelligence", "strength", "speed", "durability", "power", "combat"]
+
     @@all = []
 
     attr_accessor :player_1, :player_2, :active
@@ -12,7 +14,7 @@ class Game
         self.player_2 = Players::Computer.new("Computer")
         self.player_2.cards = shuffled_deck[15..29]
 
-        self.active = [self.player_2, self.player_2].sample
+        self.active = [self.player_1, self.player_2].sample
         @@all << self
     end
 
@@ -23,12 +25,7 @@ class Game
     def display_card
         "\n#{padding(8)}┌" + "─"*30 + "┐\n" +
         empty_card + centre_text(player_1.cards.first.name) + empty_card + empty_card + empty_card + empty_card +
-        centre_text("Intelligence: #{player_1.cards.first.powerstats["intelligence"]}") + empty_card +
-        centre_text("Strength: #{player_1.cards.first.powerstats["strength"]}") + empty_card +
-        centre_text("Speed: #{player_1.cards.first.powerstats["speed"]}") + empty_card +
-        centre_text("Durability: #{player_1.cards.first.powerstats["durability"]}") + empty_card +
-        centre_text("Power: #{player_1.cards.first.powerstats["power"]}") + empty_card +
-        centre_text("Combat: #{player_1.cards.first.powerstats["combat"]}") + empty_card +
+        LOOK_UP.collect{|i| centre_text("#{i.capitalize}: #{player_1.cards.first.powerstats[i]}") + empty_card }.join +
         "#{padding(8)}└" + "─"*30 + "┘\n\n"
     end
 
@@ -45,22 +42,7 @@ class Game
     end
 
     def evaluate(input)
-
-        #   sees results?
-        #   decides who is active
+        player_1.cards.first.powerstats[LOOK_UP[input-1]].to_i - player_2.cards.first.powerstats[LOOK_UP[input-1]].to_i
     end
-
-    # def play
-    #     board.display
-    #     turn until over?
-    #     puts winner ? "Congratulations #{winner}!" : "Cat's Game!"
-    # end
-
-    # def turn
-    #     input = current_player.move(board) 
-    #     turn unless board.valid_move?(input)
-    #     board.update(input, current_player)
-    #     board.display
-    # end
-
+    
 end
