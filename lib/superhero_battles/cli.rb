@@ -14,7 +14,7 @@ class CLI
         menu
     end
 
-    MENU_OPTIONS = [:play, :collection, :exit]
+    MENU_OPTIONS = [:play, :collection, :results, :exit]
 
     def menu(*arg) # Main menu
         options_and_do(MENU_OPTIONS)
@@ -26,12 +26,8 @@ class CLI
 
     def play
         # Game options def options
-
         # Which deck would you like to use? def deck_selector - if empty do nothing
         deck = Deck.new_random
-
-        # What difficulty would you like to play on? def difficulty_selector
-
         Game.new(user, deck)
         turn until current_game.winner
         puts "#{@@cyn}\nCongratulations #{@@white}#{current_game.winner.name}#{@@cyn}!!!\n\n#{@@white}#{@@cyn}Would you like to play again?\n#{@@white}"
@@ -40,12 +36,11 @@ class CLI
 
     def turn
         puts "#{@@white}#{current_game.players[0].name}#{@@cyn}'s turn!#{@@white}\n\n#{@@white}#{user.name}#{@@cyn}, your card is:\n#{@@white}"
-        display_active_card                 # puts players card and computers backwards?
+        display_active_card
         current_game.evaluate(get_move)
         check_tie
         current_game.update
         puts "#{@@white}\n#{current_game.players[0].name}#{@@cyn} won with #{@@white}#{current_game.players[0].cards[-2].name}\n\n"
-        # puts both cards here to see them?
     end 
 
     def get_move
@@ -53,7 +48,7 @@ class CLI
             puts "#{@@white}\n#{current_game.players[0].name}#{@@cyn}, chose your category and enter #{@@white}\"1 - 6\"!\n\n"
             get_and_validate(1..6)
         else 
-            puts "#{@@white}\n#{current_game.players[0].name}#{@@cyn} is thinking...\n#{@@white}"
+            puts "#{@@blu}\n#{current_game.players[0].name}#{@@cyn} is thinking...\n#{@@white}"
             current_game.players[0].choice
         end
     end
@@ -67,6 +62,28 @@ class CLI
 
     def current_game
         Game.all.last
+    end
+
+    # -------------------------- Results methods -----------------------------
+
+    RESULTS_OPTIONS = [:menu]
+
+    def results
+        display_results
+        options_and_do(RESULTS_OPTIONS)
+    end
+
+    def display_results
+        if Game.all.size == 0
+            puts "#{@@blu}\nThere are no previous games to show.\n#{@@white}"
+        else
+            puts "#{@@cyn}\nPrevious game results are:\n#{@@white}"
+            puts get_results
+        end
+    end
+
+    def get_results
+        Game.all.collect.with_index(1){|game, i| "#{game.winner.name} won game #{i}!\n"}
     end
 
     # -------------------------- Collection methods -----------------------------
@@ -120,6 +137,7 @@ class CLI
     OPTIONS_HASH = {
         play: "To play a game of Superhero Battles vs the computer.",
         collection: "To view the Superhero Battles cards collection.",
+        results: "To view previous game results.",
         exit: "To exit Superhero Battles.",
         next: "To view the next page of the collection.",
         previous: "To view the previous page of the collection.",
