@@ -6,4 +6,8 @@ class Player
         self.name = name
     end
 
+    def current
+        cards.first
+    end
+
 end
