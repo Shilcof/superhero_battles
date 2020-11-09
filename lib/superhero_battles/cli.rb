@@ -34,6 +34,10 @@ class CLI
         options_and_do(PLAY_OPTIONS)
     end
 
+    def display_active_card
+        puts card_builder(user.current)
+    end
+
     def turn
         puts "#{@@white}#{current_game.players[0].name}#{@@cyn}'s turn!#{@@white}\n\n#{@@white}#{user.name}#{@@cyn}, your card is:\n#{@@white}"
         display_active_card
@@ -93,6 +97,14 @@ class CLI
     def collection(page = 1)
         display_collection(page)
         options_and_do(page_options(page), page)
+    end
+
+    def display_collection(page)
+        puts "#{@@cyn}\nDisplaying page #{@@white}#{page}#{@@cyn} of #{@@white}#{(Card.all.count/60.0).ceil}#{@@cyn}.\n\n#{@@white}" +
+        (0..19).collect{|index|
+            a = (page-1)*60 + index*3 + 1
+            columnise("#{a}. #{check_card_name(a-1)}", "#{a+1}. #{check_card_name(a)}", "#{a+2}. #{check_card_name(a+1)}")
+        }.join("\n")
     end
 
     def page_options(page)
@@ -166,10 +178,6 @@ class CLI
 
     # -------------------------- Editing methods -----------------------------
 
-    def display_active_card
-        puts card_builder(user.current)
-    end
-
     def card_builder(card)
         [card_top, card_body, card_body(card.name), card_body, card_body, card_body, card_body, 
         card.powerstats.collect{|i| [card_body("#{i[0].capitalize}: #{card.powerstats[i[0]]}"), 
@@ -194,14 +202,6 @@ class CLI
 
     def filler(a, b = 0)
         " "*(a - b)
-    end
-
-    def display_collection(page)
-        puts "#{@@cyn}\nDisplaying page #{@@white}#{page}#{@@cyn} of #{@@white}#{(Card.all.count/60.0).ceil}#{@@cyn}.\n\n#{@@white}" +
-        (0..19).collect{|index|
-            a = (page-1)*60 + index*3 + 1
-            columnise("#{a}. #{check_card_name(a-1)}", "#{a+1}. #{check_card_name(a)}", "#{a+2}. #{check_card_name(a+1)}")
-        }.join("\n")
     end
 
     def check_card_name(index)
