@@ -8,7 +8,7 @@ class CLI
 
     def start
         puts "#{@@cyn}\n\nWelcome to Superhero Battles!\n\n#{@@white}Collecting your heroes...\n"
-        Card.create_from_array(API.new.get_heroes)
+        Card.create_from_array(API.new.get_heroes) # API CLASS ?
         puts "#{@@cyn}\nPlease enter your name.\n#{@@white}"
         self.user = Player.new(gets.strip.capitalize)
         menu
@@ -223,7 +223,7 @@ class CLI
         DETAIL_LOOK_UP.collect{|topic|
             "#{@@cyn}\n#{topic.to_s.capitalize}:\n\n#{@@white}" + 
             card.send(topic).collect{|category, value|
-                tab + "#{category.capitalize}: #{value}\n"
+                tab + "#{category.capitalize}: #{value}\n".gsub(/[\"\[\]]/,"")
             }.join
         }.join
     end
