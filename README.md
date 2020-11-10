@@ -28,7 +28,7 @@ chmod +x bin/superhero_battles
 
 To use the application enter:
 
-```ruby
+```bash
 bin/superhero-battles
 ```
 
