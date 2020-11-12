@@ -38,4 +38,4 @@ From here all menus can be navigated by entering the numbers listed.
 Pull requests are welcome on [GitHub](https://github.com/Shilcof/superhero_battles). This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the Contributor Covenant code of conduct.
 
 ## License
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+The application is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).

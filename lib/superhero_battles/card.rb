@@ -6,7 +6,7 @@ class Card
         self.bio = hero
         hero.each do |key, value|
             self.class.attr_accessor(key)
-            self.send(("#{key}="), value)
+            self.send("#{key}=", value)
         end
     end
 
